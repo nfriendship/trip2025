@@ -3,23 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>瀬戸内 家族旅行のしおり</title>
+    <title>家族旅行 in 瀬戸内 - 2025 Winter</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Yuji+Syuku&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
             /* 瀬戸内海カラーパレット */
-            --bg-sand: #fdfbf7;      /* 砂浜のベージュ */
-            --primary-blue: #2c6e8f; /* 穏やかな海の青 */
-            --deep-blue: #1a4a63;    /* 深海の色 */
-            --accent-orange: #e78f65;/* 夕陽のオレンジ */
-            --text-color: #4a4a4a;   /* テキスト色 */
-            --card-bg: #ffffff;      /* カード背景 */
-            --timeline-line: #dbe4eb;/* タイムラインの線 */
+            --col-sea-deep: #2c5f78;      /* 深い海の色 */
+            --col-sea-light: #89c4d9;     /* 穏やかな水面 */
+            --col-sand: #f7f3e8;          /* 砂浜・背景 */
+            --col-sunset: #ed8a63;        /* 夕陽・アクセント */
+            --col-text: #4a4a4a;          /* テキスト */
+            --col-white: #ffffff;
+            
+            --radius-card: 16px;
+            --shadow-card: 0 10px 20px rgba(44, 95, 120, 0.1);
         }
 
         * {
@@ -30,435 +33,489 @@
 
         body {
             font-family: 'Noto Sans JP', sans-serif;
-            background-color: var(--bg-sand);
-            color: var(--text-color);
+            background-color: var(--col-sand);
+            color: var(--col-text);
             line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
         }
 
-        /* ヘッダーエリア */
+        /* --- Header --- */
         header {
+            background: linear-gradient(135deg, var(--col-sea-deep), var(--col-sea-light));
+            color: var(--col-white);
+            padding: 60px 20px 80px;
             text-align: center;
-            padding: 60px 20px 40px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.2)), url('https://placehold.jp/3d4070/ffffff/1200x600.png?text=SETOUCHI%20TRIP') no-repeat center center/cover;
-            /* <!-- ユーザー差し替え用画像：ヘッダー背景（瀬戸内海の風景など推奨） --> */
-            color: var(--deep-blue);
-            border-bottom: 4px solid var(--accent-orange);
             position: relative;
-        }
-        
-        /* 画像の上にオーバーレイをかけて文字を読みやすくする場合の補助 */
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(253, 251, 247, 0.85);
-            z-index: 0;
+            overflow: hidden;
         }
 
-        .header-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        h1 {
-            font-family: 'Yuji Syuku', serif;
+        header h1 {
+            font-family: 'Zen Maru Gothic', sans-serif;
             font-size: 2.5rem;
             margin-bottom: 10px;
-            color: var(--primary-blue);
             letter-spacing: 0.1em;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        .trip-date {
-            font-size: 1.1rem;
+        header p.date {
+            font-size: 1.2rem;
             font-weight: 500;
-            color: var(--accent-orange);
+            opacity: 0.9;
+            background: rgba(255,255,255,0.2);
             display: inline-block;
-            border: 1px solid var(--accent-orange);
             padding: 5px 15px;
-            border-radius: 20px;
-            background: #fff;
+            border-radius: 50px;
         }
 
-        /* メインコンテナ */
-        .container {
+        /* 波の装飾 */
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+        .wave svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 60px;
+        }
+        .wave .shape-fill {
+            fill: var(--col-sand);
+        }
+
+        /* --- Main Container --- */
+        main {
             max-width: 800px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 20px;
         }
 
-        /* 日付セクション */
+        /* --- Day Section --- */
         .day-section {
             margin-bottom: 60px;
         }
 
         .day-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-            position: relative;
+            text-align: center;
+            margin-bottom: 40px;
+            position: sticky;
+            top: 20px;
+            z-index: 10;
         }
 
-        .day-badge {
-            background-color: var(--primary-blue);
-            color: #fff;
-            padding: 8px 16px;
-            border-radius: 8px;
+        .day-header span {
+            background-color: var(--col-sunset);
+            color: var(--col-white);
+            padding: 8px 24px;
+            border-radius: 30px;
             font-weight: bold;
-            font-size: 1.2rem;
-            margin-right: 15px;
-            box-shadow: 0 4px 10px rgba(44, 110, 143, 0.3);
-            z-index: 2;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(237, 138, 99, 0.4);
+            font-family: 'Zen Maru Gothic', sans-serif;
         }
 
-        .day-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--deep-blue);
-        }
-
-        /* タイムラインの構築 */
+        /* --- Timeline --- */
         .timeline {
             position: relative;
-            padding-left: 30px; /* 左側に線のスペースを確保 */
+            padding-left: 20px;
         }
 
         /* 縦線 */
         .timeline::before {
             content: '';
             position: absolute;
+            left: 19px; /* アイコンの中心を通るように調整 */
             top: 0;
             bottom: 0;
-            left: 14px; /* day-badgeの中央あたりに合わせる調整 */
-            width: 3px;
-            background: var(--timeline-line);
-            border-radius: 2px;
+            width: 2px;
+            background: repeating-linear-gradient(
+                to bottom,
+                var(--col-sea-light) 0,
+                var(--col-sea-light) 6px,
+                transparent 6px,
+                transparent 12px
+            );
         }
 
-        /* スポットカード */
-        .event-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.06), 0 5px 10px -5px rgba(0,0,0,0.02);
+        .timeline-item {
+            display: flex;
+            margin-bottom: 40px;
             position: relative;
-            transition: transform 0.2s ease;
         }
 
-        .event-card:hover {
-            transform: translateY(-3px);
-        }
-
-        /* タイムライン上のドット */
-        .event-card::before {
-            content: '';
-            position: absolute;
-            left: -22px; /* タイムラインの線の上に来るように調整 */
-            top: 25px;
-            width: 14px;
-            height: 14px;
+        /* アイコン */
+        .timeline-icon {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background-color: var(--col-sea-deep);
+            color: var(--col-white);
             border-radius: 50%;
-            background: #fff;
-            border: 3px solid var(--accent-orange);
-            z-index: 1;
-        }
-
-        /* 時間とアイコンの行 */
-        .event-meta {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
-            color: var(--primary-blue);
-        }
-
-        .event-time {
-            font-weight: 700;
+            justify-content: center;
+            z-index: 2;
+            box-shadow: 0 0 0 4px var(--col-sand); /* 白フチの代わり */
             font-size: 1.1rem;
-            margin-right: 15px;
-            min-width: 60px;
         }
 
-        .event-icon {
-            font-size: 1.2rem;
-            width: 30px;
-            text-align: center;
-            color: var(--accent-orange);
+        .timeline-content {
+            flex-grow: 1;
+            margin-left: 20px;
+            background-color: var(--col-white);
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            transition: transform 0.3s ease;
         }
 
-        .event-title {
-            font-size: 1.3rem;
+        .timeline-content:hover {
+            transform: translateY(-5px);
+        }
+
+        /* 時間表示 */
+        .time-badge {
+            display: inline-block;
+            background-color: var(--col-sea-light);
+            color: var(--col-white);
+            font-size: 0.9rem;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 0 0 10px 0;
+            margin-bottom: 10px;
+        }
+
+        .card-body {
+            padding: 10px 20px 20px;
+        }
+
+        .spot-title {
+            font-size: 1.25rem;
             font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--deep-blue);
-            line-height: 1.4;
+            margin-bottom: 5px;
+            color: var(--col-sea-deep);
         }
 
-        .event-desc {
+        .spot-desc {
             font-size: 0.95rem;
             color: #666;
             margin-bottom: 15px;
         }
 
-        /* 画像エリア */
-        .event-photo {
+        /* 画像スタイル */
+        .spot-image {
             width: 100%;
             height: 200px;
             object-fit: cover;
             border-radius: 8px;
             margin-top: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background-color: #eee;
+        }
+        
+        /* 帰宅などの画像がない項目用 */
+        .no-image-card {
+            border-left: 5px solid var(--col-sunset);
         }
 
-        /* ハイライト（宿泊先など） */
-        .highlight-card {
-            border-left: 5px solid var(--primary-blue);
-            background: #fbfdff;
-        }
-        .highlight-card .event-title {
-            color: var(--primary-blue);
-        }
-
-        /* フッター */
+        /* --- Footer --- */
         footer {
             text-align: center;
             padding: 40px 20px;
-            color: #888;
+            color: var(--col-sea-deep);
             font-size: 0.9rem;
-            border-top: 1px solid #eee;
-        }
-        
-        /* スマホ向けの微調整 */
-        @media (max-width: 600px) {
-            h1 { font-size: 1.8rem; }
-            .timeline { padding-left: 20px; }
-            .timeline::before { left: 9px; }
-            .event-card::before { left: -18px; width: 12px; height: 12px; }
-            .day-badge { font-size: 1rem; padding: 6px 12px; margin-right: 10px; }
-            .event-time { font-size: 1rem; }
-            .event-title { font-size: 1.1rem; }
+            opacity: 0.8;
         }
 
+        /* --- Responsive --- */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .timeline-content {
+                margin-left: 15px;
+            }
+            .timeline::before {
+                left: 19px;
+            }
+            .spot-image {
+                height: 160px;
+            }
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="header-content">
+    <header>
         <h1>瀬戸内 家族旅行</h1>
-        <div class="trip-date">2025.12.28(日) — 12.30(火)</div>
-    </div>
-</header>
-
-<div class="container">
-
-    <!-- Day 1 -->
-    <div class="day-section">
-        <div class="day-header">
-            <div class="day-badge">Day 1</div>
-            <div class="day-title">12/28(日) 倉敷・美観地区</div>
+        <p class="date">2025.12.28 (Sun) - 12.30 (Tue)</p>
+        <div class="wave">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
         </div>
-        
-        <div class="timeline">
-            <!-- 8:00 -->
-            <div class="event-card">
-                <div class="event-meta">
-                    <span class="event-time">08:00</span>
-                    <i class="fas fa-car event-icon"></i>
-                </div>
-                <h3 class="event-title">出発</h3>
-                <p class="event-desc">いざ、瀬戸内へ！安全運転で行きましょう。</p>
+    </header>
+
+    <main>
+        <!-- DAY 1 -->
+        <section class="day-section">
+            <div class="day-header">
+                <span>12/28 (日) 倉敷への旅路</span>
             </div>
-
-            <!-- 12:00 -->
-            <div class="event-card">
-                <div class="event-meta">
-                    <span class="event-time">12:00</span>
-                    <i class="fas fa-utensils event-icon"></i>
+            <div class="timeline">
+                
+                <!-- 08:00 出発 -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-car-side"></i></div>
+                    <div class="timeline-content no-image-card">
+                        <div class="time-badge">08:00</div>
+                        <div class="card-body">
+                            <h3 class="spot-title">出発</h3>
+                            <p class="spot-desc">家族全員集合して出発！安全運転で行きましょう。</p>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="event-title">昼食：腹ペコチキン</h3>
-                <p class="event-desc">倉敷でのランチタイム。</p>
-                <!-- ユーザー差し替え用画像：食事のイメージ -->
-                <img src="https://placehold.jp/2c6e8f/ffffff/600x400.png?text=Lunch%20in%20Kurashiki" alt="腹ペコチキン" class="event-photo">
-            </div>
 
-            <!-- 13:00 -->
-            <div class="event-card">
-                <div class="event-meta">
-                    <span class="event-time">13:00</span>
-                    <i class="fas fa-walking event-icon"></i>
+                <!-- 12:00 昼食 -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-utensils"></i></div>
+                    <div class="timeline-content">
+                        <div class="time-badge">12:00</div>
+                        <div class="card-body">
+                            <h3 class="spot-title">倉敷「腹ペコチキン」</h3>
+                            <p class="spot-desc">倉敷に到着。まずは名物ランチで腹ごしらえ。</p>
+                            <!-- 画像: 腹ペコチキン -->
+                            <img src="https://placehold.jp/3d4070/ffffff/600x400.png?text=Lunch+Kurashiki" alt="腹ペコチキン" class="spot-image">
+                        </div>
+                    </div>
                 </div>
-                <h3 class="event-title">倉敷美観地区 散策</h3>
-                <p class="event-desc">白壁の街並みをゆっくり散歩。お土産も見よう。</p>
-                <!-- ユーザー差し替え用画像：倉敷美観地区の風景 -->
-                <img src="https://placehold.jp/e78f65/ffffff/600x400.png?text=Kurashiki%20Bikan%20Area" alt="倉敷美観地区" class="event-photo">
-            </div>
 
-            <!-- 16:00 -->
-            <div class="event-card highlight-card">
-                <div class="event-meta">
-                    <span class="event-time">16:00</span>
-                    <i class="fas fa-hotel event-icon"></i>
+                <!-- 13:00 美観地区 -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-camera"></i></div>
+                    <div class="timeline-content">
+                        <div class="time-badge">13:00</div>
+                        <div class="card-body">
+                            <h3 class="spot-title">美観地区 散策</h3>
+                            <p class="spot-desc">白壁の街並みをゆっくり散策。お土産も見に行こう。</p>
+                            <!-- 画像: 美観地区 -->
+                            <img src="https://placehold.jp/5d8aa8/ffffff/600x400.png?text=Bikan+District" alt="美観地区" class="spot-image">
+                        </div>
+                    </div>
                 </div>
-                <h3 class="event-title">ホテルセントイン倉敷</h3>
-                <p class="event-desc">チェックインして少し休憩。</p>
-            </div>
 
-            <!-- 18:00 -->
-            <div class="event-card">
-                <div class="event-meta">
-                    <span class="event-time">18:00</span>
-                    <i class="fas fa-beer event-icon"></i>
+                <!-- 16:00 ホテル着 -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-hotel"></i></div>
+                    <div class="timeline-content">
+                        <div class="time-badge">16:00</div>
+                        <div class="card-body">
+                            <h3 class="spot-title">ホテルセントイン倉敷</h3>
+                            <p class="spot-desc">チェックインして少し休憩。</p>
+                            <!-- 画像: ホテルセントイン倉敷 -->
+                            <img src="https://placehold.jp/e67e22/ffffff/600x400.png?text=Hotel+CheckIn" alt="ホテルセントイン倉敷" class="spot-image">
+                        </div>
+                    </div>
                 </div>
-                <h3 class="event-title">夕食：おたやん食堂</h3>
-                <p class="event-desc">地元の味を楽しもう。</p>
-            </div>
-        </div>
-    </div>
 
-    <!-- Day 2 -->
-    <div class="day-section">
-        <div class="day-header">
-            <div class="day-badge">Day 2</div>
-            <div class="day-title">12/29(月) 瀬戸大橋・うどん県へ</div>
-        </div>
-
-        <div class="timeline">
-            <!-- 9:00 -->
-            <div class="event-card">
-                <div class="event-meta">
-                    <span class="event-time">09:00</span>
-                    <i class="fas fa-car-side event-icon"></i>
+                <!-- 18:00 夕食 -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-beer"></i></div>
+                    <div class="timeline-content">
+                        <div class="time-badge">18:00</div>
+                        <div class="card-body">
+                            <h3 class="spot-title">おたやん食堂</h3>
+                            <p class="spot-desc">地元の美味しい料理とお酒で乾杯。</p>
+                            <!-- 画像: おたやん食堂 -->
+                            <img src="https://placehold.jp/3d4070/ffffff/600x400.png?text=Dinner+Otayan" alt="おたやん食堂" class="spot-image">
+                        </div>
+                    </div>
                 </div>
-                <h3 class="event-title">ホテル出発</h3>
-                <p class="event-desc">岡山から香川方面へ移動開始。</p>
-            </div>
 
-            <!-- 11:00 -->
-            <div class="event-card">
-                <div class="event-meta">
-                    <span class="event-time">11:00</span>
-                    <i class="fas fa-camera event-icon"></i>
+                <!-- 19:30 ホテル戻り -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-bed"></i></div>
+                    <div class="timeline-content no-image-card">
+                        <div class="time-badge">19:30</div>
+                        <div class="card-body">
+                            <h3 class="spot-title">ホテル帰着</h3>
+                            <p class="spot-desc">明日に備えてゆっくり休みましょう。</p>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="event-title">与島PA (瀬戸大橋)</h3>
-                <p class="event-desc">絶景スポット！瀬戸大橋の真ん中で記念撮影。</p>
-                <!-- ユーザー差し替え用画像：瀬戸大橋の風景 -->
-                <img src="https://placehold.jp/2c6e8f/ffffff/600x400.png?text=Seto%20Ohashi%20Bridge" alt="瀬戸大橋" class="event-photo">
-            </div>
 
-            <!-- 13:00 -->
-            <div class="event-card">
-                <div class="event-meta">
-                    <span class="event-time">13:00</span>
-                    <i class="fas fa-bowl-food event-icon"></i>
+            </div>
+        </section>
+
+        <!-- DAY 2 -->
+        <section class="day-section">
+            <div class="day-header">
+                <span>12/29 (月) 瀬戸大橋と讃岐うどん</span>
+            </div>
+            <div class="timeline">
+
+                <!-- 09:00 ホテル発 -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-car"></i></div>
+                    <div class="timeline-content no-image-card">
+                        <div class="time-badge">09:00</div>
+                        <div class="card-body">
+                            <h3 class="spot-title">ホテル出発</h3>
+                            <p class="spot-desc">2日目スタート！瀬戸大橋方面へ。</p>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="event-title">麺処綿谷（丸亀）</h3>
-                <p class="event-desc">本場の讃岐うどんを堪能！「肉ぶっかけ」が有名？</p>
-                <!-- ユーザー差し替え用画像：うどん -->
-                <img src="https://placehold.jp/e78f65/ffffff/600x400.png?text=Sanuki%20Udon" alt="麺処綿谷" class="event-photo">
-            </div>
 
-            <!-- 14:30 -->
-            <div class="event-card">
-                <div class="event-meta">
-                    <span class="event-time">14:30</span>
-                    <i class="fas fa-landmark event-icon"></i>
+                <!-- 11:00 与島PA -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-map-marked-alt"></i></div>
+                    <div class="timeline-content">
+                        <div class="time-badge">11:00</div>
+                        <div class="card-body">
+                            <h3 class="spot-title">与島PA</h3>
+                            <p class="spot-desc">瀬戸大橋の絶景ポイント。記念撮影タイム。</p>
+                            <!-- 画像: 与島PA -->
+                            <img src="https://placehold.jp/5d8aa8/ffffff/600x400.png?text=Yoshima+PA" alt="与島PA" class="spot-image">
+                        </div>
+                    </div>
                 </div>
-                <h3 class="event-title">瀬戸大橋記念公園 or 丸亀城</h3>
-                <p class="event-desc">当日の気分と天気で決定。</p>
-                <!-- ユーザー差し替え用画像：丸亀城などの風景 -->
-                <img src="https://placehold.jp/cccccc/ffffff/600x400.png?text=Marugame%20Castle" alt="観光スポット" class="event-photo">
-            </div>
 
-            <!-- 16:00 -->
-            <div class="event-card highlight-card">
-                <div class="event-meta">
-                    <span class="event-time">16:00</span>
-                    <i class="fas fa-hot-tub-person event-icon"></i>
+                <!-- 13:00 麺処綿谷 -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-utensils"></i></div>
+                    <div class="timeline-content">
+                        <div class="time-badge">13:00</div>
+                        <div class="card-body">
+                            <h3 class="spot-title">麺処 綿谷（丸亀）</h3>
+                            <p class="spot-desc">本場の讃岐うどんを堪能。</p>
+                            <!-- 画像: 麺処綿谷 -->
+                            <img src="https://placehold.jp/3d4070/ffffff/600x400.png?text=Udon+Lunch" alt="麺処綿谷" class="spot-image">
+                        </div>
+                    </div>
                 </div>
-                <h3 class="event-title">ことひら温泉 琴参閣</h3>
-                <p class="event-desc">温泉で旅の疲れを癒やす贅沢なひととき。</p>
-                <!-- ユーザー差し替え用画像：温泉旅館の外観 -->
-                <img src="https://placehold.jp/2c6e8f/ffffff/600x400.png?text=Kotosankaku%20Onsen" alt="琴参閣" class="event-photo">
-            </div>
-        </div>
-    </div>
 
-    <!-- Day 3 -->
-    <div class="day-section">
-        <div class="day-header">
-            <div class="day-badge">Day 3</div>
-            <div class="day-title">12/30(火) こんぴらさん・帰路</div>
-        </div>
-
-        <div class="timeline">
-            <!-- 朝食 -->
-            <div class="event-card">
-                <div class="event-meta">
-                    <span class="event-time">Morning</span>
-                    <i class="fas fa-coffee event-icon"></i>
+                <!-- 14:30 観光 -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-walking"></i></div>
+                    <div class="timeline-content">
+                        <div class="time-badge">14:30</div>
+                        <div class="card-body">
+                            <h3 class="spot-title">瀬戸大橋記念公園 or 丸亀城</h3>
+                            <p class="spot-desc">天候や気分に合わせてどちらかへ。</p>
+                            <!-- 画像: 瀬戸大橋記念公園or丸亀城 -->
+                            <img src="https://placehold.jp/5d8aa8/ffffff/600x400.png?text=Park+or+Castle" alt="観光スポット" class="spot-image">
+                        </div>
+                    </div>
                 </div>
-                <h3 class="event-title">朝食・チェックアウト準備</h3>
-            </div>
 
-            <!-- 10:00 -->
-            <div class="event-card">
-                <div class="event-meta">
-                    <span class="event-time">10:00</span>
-                    <i class="fas fa-suitcase event-icon"></i>
+                <!-- 16:00 温泉宿 -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-hot-tub"></i></div>
+                    <div class="timeline-content">
+                        <div class="time-badge">16:00</div>
+                        <div class="card-body">
+                            <h3 class="spot-title">ことひら温泉 琴参閣</h3>
+                            <p class="spot-desc">早めのチェックインで温泉三昧。</p>
+                            <!-- 画像: ことひら温泉琴参閣 -->
+                            <img src="https://placehold.jp/e67e22/ffffff/600x400.png?text=Onsen+Hotel" alt="ことひら温泉琴参閣" class="spot-image">
+                        </div>
+                    </div>
                 </div>
-                <h3 class="event-title">琴参閣 出発</h3>
-            </div>
 
-            <!-- 10:15 -->
-            <div class="event-card">
-                <div class="event-meta">
-                    <span class="event-time">10:15</span>
-                    <i class="fas fa-torii-gate event-icon"></i>
+            </div>
+        </section>
+
+        <!-- DAY 3 -->
+        <section class="day-section">
+            <div class="day-header">
+                <span>12/30 (火) 金比羅山参拝</span>
+            </div>
+            <div class="timeline">
+
+                <!-- 朝食 -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-coffee"></i></div>
+                    <div class="timeline-content no-image-card">
+                        <div class="time-badge">Morning</div>
+                        <div class="card-body">
+                            <h3 class="spot-title">朝食・チェックアウト準備</h3>
+                            <p class="spot-desc">朝ごはんをしっかり食べてエネルギーチャージ。</p>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="event-title">金刀比羅宮（参拝）</h3>
-                <p class="event-desc">長い石段を登って御本宮へ。幸せ参り。</p>
-                <!-- ユーザー差し替え用画像：金刀比羅宮 -->
-                <img src="https://placehold.jp/e78f65/ffffff/600x400.png?text=Konpira-san%20Shrine" alt="金刀比羅宮" class="event-photo">
-            </div>
 
-            <!-- 12:00 -->
-            <div class="event-card">
-                <div class="event-meta">
-                    <span class="event-time">12:00</span>
-                    <i class="fas fa-utensils event-icon"></i>
+                <!-- 10:00 出発 -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-shoe-prints"></i></div>
+                    <div class="timeline-content no-image-card">
+                        <div class="time-badge">10:00</div>
+                        <div class="card-body">
+                            <h3 class="spot-title">琴参閣 出発</h3>
+                            <p class="spot-desc">荷物をまとめて、いざこんぴらさんへ。</p>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="event-title">昼食</h3>
-                <p class="event-desc">参道周辺で最後のグルメを楽しむ。</p>
-            </div>
 
-            <!-- 13:00 -->
-            <div class="event-card">
-                <div class="event-meta">
-                    <span class="event-time">13:00</span>
-                    <i class="fas fa-car event-icon"></i>
+                <!-- 10:15 金刀比羅宮 -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-torii-gate"></i></div>
+                    <div class="timeline-content">
+                        <div class="time-badge">10:15</div>
+                        <div class="card-body">
+                            <h3 class="spot-title">金刀比羅宮（参拝）</h3>
+                            <p class="spot-desc">階段を登って本宮へ。景色も最高です。</p>
+                            <!-- 画像: 金刀比羅宮 -->
+                            <img src="https://placehold.jp/e67e22/ffffff/600x400.png?text=Konpira-san" alt="金刀比羅宮" class="spot-image">
+                        </div>
+                    </div>
                 </div>
-                <h3 class="event-title">現地発</h3>
-                <p class="event-desc">お土産を買って、帰路へ。</p>
-            </div>
 
-            <!-- 17:00 -->
-            <div class="event-card">
-                <div class="event-meta">
-                    <span class="event-time">17:00</span>
-                    <i class="fas fa-house event-icon"></i>
+                <!-- 12:00 昼食 -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-utensils"></i></div>
+                    <div class="timeline-content">
+                        <div class="time-badge">12:00</div>
+                        <div class="card-body">
+                            <h3 class="spot-title">参道周辺で昼食</h3>
+                            <p class="spot-desc">参拝の後は美味しいご当地グルメを。</p>
+                            <!-- 画像: 昼食 -->
+                            <img src="https://placehold.jp/3d4070/ffffff/600x400.png?text=Final+Lunch" alt="昼食" class="spot-image">
+                        </div>
+                    </div>
                 </div>
-                <h3 class="event-title">帰宅</h3>
-                <p class="event-desc">お疲れ様でした！</p>
+
+                <!-- 13:00 現地発 -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-car"></i></div>
+                    <div class="timeline-content no-image-card">
+                        <div class="time-badge">13:00</div>
+                        <div class="card-body">
+                            <h3 class="spot-title">現地出発</h3>
+                            <p class="spot-desc">楽しかった旅も終わり。安全運転で帰路へ。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 17:00 帰宅 -->
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-home"></i></div>
+                    <div class="timeline-content no-image-card">
+                        <div class="time-badge">17:00</div>
+                        <div class="card-body">
+                            <h3 class="spot-title">帰宅</h3>
+                            <p class="spot-desc">お疲れ様でした！</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
-</div>
-
-<footer>
-    <p>&copy; 2025 Setouchi Family Trip</p>
-</footer>
+    <footer>
+        <p>© 2025 Family Trip Record</p>
+    </footer>
 
 </body>
 </html>
